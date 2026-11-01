@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel do Proprietário</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070b14;
+      --bg-card: #0f172a;
+      --blue-700: #1d4ed8;
+      --blue-500: #3b82f6;
+      --blue-400: #60a5fa;
+      --blue-300: #93c5fd;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --warning: #eab308;
+      --border: rgba(59, 130, 246, 0.25);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(29, 78, 216, 0.2), transparent);
+    }
+    .login-screen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .login-box {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+      padding: 2.5rem; width: 100%; max-width: 400px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    }
+    .login-box h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--blue-300); }
+    .login-box p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.75rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-muted); margin-bottom: 0.4rem; }
+    input, textarea {
+      width: 100%; padding: 0.85rem 1rem; background: #0a0f1a; border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); font-size: 1rem; font-family: inherit;
+    }
+    input:focus, textarea:focus { outline: none; border-color: var(--blue-500); }
+    textarea { min-height: 100px; resize: vertical; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.9rem 1.5rem; font-size: 1rem; font-weight: 600; border: none;
+      border-radius: 10px; cursor: pointer; transition: all 0.2s; width: 100%;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--blue-700), var(--blue-500)); color: white; }
+    .btn-primary:hover { opacity: 0.95; transform: translateY(-1px); }
+    .btn-sm { width: auto; padding: 0.5rem 1rem; font-size: 0.85rem; }
+    .btn-outline { background: transparent; color: var(--blue-400); border: 1px solid var(--blue-500); }
+    .btn-outline:hover { background: rgba(59,130,246,0.1); }
+    .btn-success { background: linear-gradient(135deg, #16a34a, #22c55e); color: white; width: auto; padding: 0.45rem 0.9rem; font-size: 0.8rem; }
+    .btn-danger { background: transparent; color: var(--danger); border: 1px solid rgba(239,68,68,0.4); }
+    .error { color: var(--danger); font-size: 0.85rem; margin-top: 0.75rem; display: none; }
+    .panel { display: none; max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    .panel.active { display: block; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+    header h1 { font-size: 1.5rem; color: var(--blue-300); }
+    .header-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .tabs {
+      display: flex; gap: 0.5rem; margin-bottom: 1.75rem; flex-wrap: wrap;
+      border-bottom: 1px solid var(--border); padding-bottom: 0.75rem;
+    }
+    .tab {
+      padding: 0.55rem 1.1rem; background: transparent; border: 1px solid transparent;
+      color: var(--text-muted); border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 0.9rem;
+    }
+    .tab.active { background: rgba(59,130,246,0.15); border-color: var(--blue-500); color: var(--blue-300); }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.5rem; margin-bottom: 1.25rem;
+    }
+    .card h2 { font-size: 1.1rem; margin-bottom: 1.1rem; color: var(--blue-400); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+    .preview-img { max-width: 160px; border-radius: 10px; margin-top: 0.6rem; border: 1px solid var(--border); display: none; }
+    .note { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.35rem; }
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem; background: #166534; color: white;
+      padding: 1rem 1.5rem; border-radius: 12px; font-weight: 500;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3); transform: translateY(100px); opacity: 0;
+      transition: all 0.3s; z-index: 50;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 0.75rem 0.6rem; border-bottom: 1px solid var(--border); }
+    th { color: var(--text-muted); font-weight: 500; font-size: 0.8rem; }
+    .badge {
+      display: inline-block; padding: 0.2rem 0.55rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+    }
+    .badge-pending { background: rgba(234,179,8,0.15); color: var(--warning); }
+    .badge-released { background: rgba(34,197,94,0.15); color: var(--success); }
+    .msg-item {
+      background: #0a0f1a; border: 1px solid var(--border); border-radius: 12px;
+      padding: 1rem; margin-bottom: 0.75rem;
+    }
+    .msg-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+    .msg-reply { margin-top: 0.75rem; display: flex; gap: 0.5rem; }
+    .msg-reply input { flex: 1; }
+    .empty { color: var(--text-muted); font-size: 0.95rem; padding: 1.5rem 0; text-align: center; }
+    .section { display: none; }
+    .section.active { display: block; }
+  </style>
+</head>
+<body>
+  <div class="login-screen" id="loginScreen">
+    <div class="login-box">
+      <h1>🔒 Painel Privado</h1>
+      <p>Acesso restrito ao proprietário do site.</p>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="Digite a senha" autocomplete="current-password" />
+      </div>
+      <button class="btn btn-primary" onclick="tryLogin()">Entrar</button>
+      <p class="error" id="loginError">Senha incorreta.</p>
+    </div>
+  </div>
+
+  <div class="panel" id="panel">
+    <header>
+      <h1>⚙️ Painel do Proprietário</h1>
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-outline btn-sm" target="_blank">Ver site →</a>
+        <button class="btn btn-outline btn-sm" onclick="logout()">Sair</button>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showSection('config')">📘 E-book & Pix</button>
+      <button class="tab" onclick="showSection('orders')">💰 Pagamentos</button>
+      <button class="tab" onclick="showSection('messages')">💬 Conversas</button>
+    </div>
+
+    <!-- Configuração -->
+    <div class="section active" id="sec-config">
+      <form id="configForm" onsubmit="saveConfig(event)">
+        <div class="card">
+          <h2>📘 Dados do E-book</h2>
+          <div class="form-group">
+            <label>Nome do E-book</label>
+            <input type="text" id="title" required />
+          </div>
+          <div class="form-group">
+            <label>Preço (R$)</label>
+            <input type="number" id="price" step="0.01" min="0" required />
+          </div>
+          <div class="form-group">
+            <label>Descrição</label>
+            <textarea id="description" required></textarea>
+          </div>
+          <div class="form-group">
+            <label>URL da Capa</label>
+            <input type="url" id="image" placeholder="https://..." />
+            <p class="note">Cole o link de uma imagem</p>
+            <img id="previewImg" class="preview-img" alt="Preview" />
+          </div>
+          <div class="form-group">
+            <label>Link do E-book completo (PDF)</label>
+            <input type="url" id="ebookUrl" required />
+            <p class="note">Link direto para download que será liberado ao cliente</p>
+          </div>
+        </div>
+        <div class="card">
+          <h2>💳 Configuração do Pix</h2>
+          <div class="form-group">
+            <label>Chave Pix</label>
+            <input type="text" id="pixKey" required />
+          </div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Nome do Recebedor (máx 25)</label>
+              <input type="text" id="merchantName" maxlength="25" required />
+            </div>
+            <div class="form-group">
+              <label>Cidade (máx 15)</label>
+              <input type="text" id="merchantCity" maxlength="15" required />
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">💾 Salvar alterações</button>
+      </form>
+    </div>
+
+    <!-- Pagamentos / Pedidos -->
+    <div class="section" id="sec-orders">
+      <div class="card">
+        <h2>💰 Pedidos / Pagamentos</h2>
+        <p class="note" style="margin-bottom:1rem;">Quando o cliente pagar e clicar em “Já paguei”, o pedido aparece aqui. Você confere no extrato do banco e libera o e-book.</p>
+        <div id="ordersList"></div>
+      </div>
+    </div>
+
+    <!-- Mensagens -->
+    <div class="section" id="sec-messages">
+      <div class="card">
+        <h2>💬 Conversas com clientes</h2>
+        <div id="messagesList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Salvo com sucesso!</div>
+
+  <script>
+    const PASSWORD = "jegue321";
+    const AUTH_KEY = "ebookAdminAuth";
+    const CFG_KEY = "ebookConfig";
+    const ORDERS_KEY = "ebookOrders";
+    const MSGS_KEY = "ebookMessages";
+
+    const DEFAULT_CONFIG = {
+      title: "Guia Completo de Marketing Digital 2026",
+      price: 27.90,
+      description: "Aprenda as estratégias mais atualizadas de tráfego pago, orgânico e conversão.\n\nMais de 120 páginas com cases reais, templates e checklist prontos para usar.",
+      image: "",
+      pixKey: "seuemail@dominio.com",
+      merchantName: "SEU NOME",
+      merchantCity: "SAO PAULO",
+      ebookUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    };
+
+    function getConfig() {
+      try {
+        const s = localStorage.getItem(CFG_KEY);
+        return s ? { ...DEFAULT_CONFIG, ...JSON.parse(s) } : { ...DEFAULT_CONFIG };
+      } catch { return { ...DEFAULT_CONFIG }; }
+    }
+    function getOrders() {
+      try { return JSON.parse(localStorage.getItem(ORDERS_KEY) || "[]"); } catch { return []; }
+    }
+    function saveOrders(o) { localStorage.setItem(ORDERS_KEY, JSON.stringify(o)); }
+    function getMessages() {
+      try { return JSON.parse(localStorage.getItem(MSGS_KEY) || "[]"); } catch { return []; }
+    }
+    function saveMessages(m) { localStorage.setItem(MSGS_KEY, JSON.stringify(m)); }
+
+    function isAuthenticated() { return sessionStorage.getItem(AUTH_KEY) === "true"; }
+    function tryLogin() {
+      if (document.getElementById("password").value === PASSWORD) {
+        sessionStorage.setItem(AUTH_KEY, "true");
+        showPanel();
+      } else {
+        document.getElementById("loginError").style.display = "block";
+        document.getElementById("password").value = "";
+      }
+    }
+    function logout() {
+      sessionStorage.removeItem(AUTH_KEY);
+      location.reload();
+    }
+    function showPanel() {
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("panel").classList.add("active");
+      loadForm();
+      renderOrders();
+      renderMessages();
+    }
+
+    function showSection(name) {
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.getElementById("sec-" + name).classList.add("active");
+      event.target.classList.add("active");
+      if (name === "orders") renderOrders();
+      if (name === "messages") renderMessages();
+    }
+
+    function loadForm() {
+      const cfg = getConfig();
+      document.getElementById("title").value = cfg.title;
+      document.getElementById("price").value = cfg.price;
+      document.getElementById("description").value = cfg.description;
+      document.getElementById("image").value = cfg.image || "";
+      document.getElementById("ebookUrl").value = cfg.ebookUrl;
+      document.getElementById("pixKey").value = cfg.pixKey;
+      document.getElementById("merchantName").value = cfg.merchantName;
+      document.getElementById("merchantCity").value = cfg.merchantCity;
+      updatePreview();
+    }
+    function saveConfig(e) {
+      e.preventDefault();
+      const cfg = {
+        title: document.getElementById("title").value.trim(),
+        price: parseFloat(document.getElementById("price").value) || 0,
+        description: document.getElementById("description").value.trim(),
+        image: document.getElementById("image").value.trim(),
+        ebookUrl: document.getElementById("ebookUrl").value.trim(),
+        pixKey: document.getElementById("pixKey").value.trim(),
+        merchantName: document.getElementById("merchantName").value.trim(),
+        merchantCity: document.getElementById("merchantCity").value.trim()
+      };
+      localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
+      localStorage.setItem("ebookConfigUpdated", Date.now().toString());
+      showToast("Salvo! Atualize a página de vendas (F5) se o preço não mudar.");
+    }
+    function updatePreview() {
+      const url = document.getElementById("image").value.trim();
+      const img = document.getElementById("previewImg");
+      if (url) {
+        img.src = url; img.style.display = "block";
+        img.onerror = () => img.style.display = "none";
+      } else img.style.display = "none";
+    }
+
+    function renderOrders() {
+      const orders = getOrders().sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const box = document.getElementById("ordersList");
+      if (!orders.length) {
+        box.innerHTML = '<div class="empty">Nenhum pedido ainda.</div>';
+        return;
+      }
+      box.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>E-mail</th>
+              <th>Valor</th>
+              <th>Data</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${orders.map(o => `
+              <tr>
+                <td>${o.name || "—"}</td>
+                <td>${o.email}</td>
+                <td>R$ ${Number(o.amount).toFixed(2).replace(".", ",")}</td>
+                <td>${new Date(o.createdAt).toLocaleString("pt-BR")}</td>
+                <td>
+                  <span class="badge ${o.status === "released" ? "badge-released" : "badge-pending"}">
+                    ${o.status === "released" ? "Liberado" : "Pendente"}
+                  </span>
+                </td>
+                <td style="white-space:nowrap;">
+                  ${o.status === "pending"
+                    ? `<button class="btn btn-success" onclick="releaseOrder('${o.id}')">Liberar</button>`
+                    : `<button class="btn btn-outline btn-sm" onclick="cancelRelease('${o.id}')" style="border-color:rgba(234,179,8,0.5);color:#eab308;">Cancelar liberação</button>`}
+                  <button class="btn btn-danger btn-sm" onclick="deleteOrder('${o.id}')" style="margin-left:0.35rem;padding:0.45rem 0.7rem;">Excluir</button>
+                </td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function releaseOrder(id) {
+      const orders = getOrders();
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+      if (!confirm(`Liberar o e-book para ${order.email}?`)) return;
+      order.status = "released";
+      order.releasedAt = new Date().toISOString();
+      saveOrders(orders);
+      renderOrders();
+      showToast("E-book liberado para " + order.email);
+    }
+
+    function cancelRelease(id) {
+      const orders = getOrders();
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+      if (!confirm(`Cancelar a liberação do e-book de ${order.email}?\n\nO cliente perderá o acesso.`)) return;
+      order.status = "pending";
+      delete order.releasedAt;
+      saveOrders(orders);
+      renderOrders();
+      showToast("Liberação cancelada para " + order.email);
+    }
+
+    function deleteOrder(id) {
+      const orders = getOrders();
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+      if (!confirm(`Excluir o pedido de ${order.email}?\n\nEsta ação não pode ser desfeita.`)) return;
+      const updated = orders.filter(o => o.id !== id);
+      saveOrders(updated);
+      renderOrders();
+      showToast("Pedido excluído");
+    }
+
+    function renderMessages() {
+      const msgs = getMessages().sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const box = document.getElementById("messagesList");
+      if (!msgs.length) {
+        box.innerHTML = '<div class="empty">Nenhuma mensagem de clientes ainda.</div>';
+        return;
+      }
+      // Agrupa por e-mail
+      const byEmail = {};
+      msgs.forEach(m => {
+        if (!byEmail[m.email]) byEmail[m.email] = [];
+        byEmail[m.email].push(m);
+      });
+      box.innerHTML = Object.entries(byEmail).map(([email, list]) => {
+        const last = list[0];
+        return `
+          <div class="msg-item">
+            <div class="msg-meta">
+              <strong>${last.name || email}</strong> · ${email} · ${new Date(last.createdAt).toLocaleString("pt-BR")}
+            </div>
+            ${list.map(m => `
+              <div style="margin:0.4rem 0;padding:0.5rem;background:rgba(59,130,246,0.08);border-radius:8px;">
+                <small style="color:var(--text-muted)">${m.from === "client" ? "Cliente" : "Você"}:</small><br>
+                ${m.text}
+              </div>
+            `).join("")}
+            <div class="msg-reply">
+              <input type="text" id="reply-${email.replace(/[^a-z0-9]/gi,"")}" placeholder="Responder..." />
+              <button class="btn btn-primary btn-sm" onclick="replyMsg('${email}')">Enviar</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function replyMsg(email) {
+      const safe = email.replace(/[^a-z0-9]/gi, "");
+      const input = document.getElementById("reply-" + safe);
+      const text = input.value.trim();
+      if (!text) return;
+      const msgs = getMessages();
+      const clientMsg = msgs.find(m => m.email === email);
+      msgs.push({
+        id: Date.now().toString(36),
+        email,
+        name: clientMsg ? clientMsg.name : email,
+        text,
+        from: "admin",
+        createdAt: new Date().toISOString(),
+        read: true
+      });
+      saveMessages(msgs);
+      input.value = "";
+      renderMessages();
+      showToast("Resposta enviada");
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      if (msg) t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2800);
+    }
+
+    document.getElementById("password").addEventListener("keydown", e => {
+      if (e.key === "Enter") tryLogin();
+    });
+    document.getElementById("image").addEventListener("input", updatePreview);
+
+    if (isAuthenticated()) showPanel();
+  </script>
+</body>
+</html>

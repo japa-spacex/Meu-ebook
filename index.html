@@ -1,131 +1,916 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketing Digital | Seu Guia Completo</title>
-<style>
-* {box-sizing:border-box}
-body {
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#0b1020;
-  color:white;
-}
-header {
-  padding:22px;
-  text-align:center;
-  background:#111a32;
-  color:#55aaff;
-  font-size:22px;
-  font-weight:bold;
-}
-.hero {
-  text-align:center;
-  padding:65px 20px;
-  background:linear-gradient(140deg,#102b57,#10152c,#182b54);
-}
-.tag {
-  color:#64b5ff;
-  font-weight:bold;
-  letter-spacing:2px;
-}
-h1 {font-size:38px;margin:20px 0}
-.hero p {
-  color:#d0d9e9;
-  line-height:1.7;
-  max-width:600px;
-  margin:15px auto 28px;
-}
-.btn {
-  display:inline-block;
-  padding:16px 28px;
-  background:#1685f8;
-  color:white;
-  text-decoration:none;
-  border-radius:9px;
-  font-weight:bold;
-}
-section {
-  padding:45px 22px;
-  max-width:850px;
-  margin:auto;
-}
-h2 {color:#62adff}
-.card {
-  background:#151f38;
-  border:1px solid #293d60;
-  padding:22px;
-  border-radius:14px;
-  margin:15px 0;
-}
-.card p {color:#c6d1e3;line-height:1.6}
-footer {
-  text-align:center;
-  padding:25px;
-  background:#111a32;
-  color:#aab7ca;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-book Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <style>
+    :root {
+      --bg: #070b14;
+      --bg-card: #0f172a;
+      --blue-700: #1d4ed8;
+      --blue-500: #3b82f6;
+      --blue-400: #60a5fa;
+      --blue-300: #93c5fd;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --border: rgba(59, 130, 246, 0.25);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(29, 78, 216, 0.25), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(30, 58, 138, 0.15), transparent);
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 2.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border);
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .logo {
+      font-weight: 800; font-size: 1.4rem;
+      background: linear-gradient(135deg, var(--blue-400), var(--blue-300));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .header-right { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+      padding: 0.65rem 1.2rem; font-size: 0.9rem; font-weight: 600;
+      border: none; border-radius: 10px; cursor: pointer; transition: all 0.2s; text-decoration: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue-700), var(--blue-500)); color: white;
+      box-shadow: 0 8px 20px -5px rgba(59, 130, 246, 0.4);
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--blue-400); border: 1px solid var(--blue-500);
+    }
+    .btn-outline:hover { background: rgba(59, 130, 246, 0.1); }
+    .btn-success { background: linear-gradient(135deg, #16a34a, #22c55e); color: white; }
+    .user-badge {
+      font-size: 0.85rem; color: var(--text-muted); padding: 0.4rem 0.8rem;
+      background: rgba(59,130,246,0.1); border-radius: 8px;
+    }
+    .hero {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-bottom: 3rem;
+    }
+    @media (max-width: 800px) { .hero { grid-template-columns: 1fr; gap: 2rem; } }
+    .cover-wrap {
+      position: relative; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6), 0 0 0 1px var(--border);
+      background: var(--bg-card); aspect-ratio: 3/4; max-width: 380px; margin: 0 auto;
+    }
+    .cover-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cover-placeholder {
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(145deg, #1e3a8a, #0f172a); color: var(--blue-300);
+      font-size: 1.1rem; text-align: center; padding: 2rem;
+    }
+    .info h1 {
+      font-size: 2.3rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff, var(--blue-300));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .price-box {
+      display: inline-flex; align-items: baseline; gap: 0.5rem; margin: 1.1rem 0 1.4rem;
+      background: rgba(59,130,246,0.12); border: 1px solid var(--border);
+      padding: 0.7rem 1.2rem; border-radius: 12px;
+    }
+    .price-box .label { font-size: 0.9rem; color: var(--text-muted); }
+    .price-box .value { font-size: 1.9rem; font-weight: 800; color: var(--blue-400); }
+    .desc { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 1.75rem; white-space: pre-wrap; }
+    .status-box {
+      margin-top: 1.5rem; padding: 1rem 1.25rem; border-radius: 12px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+      display: none;
+    }
+    .status-box.active { display: block; }
+    .status-box h3 { color: var(--success); margin-bottom: 0.4rem; }
+    .status-pending {
+      background: rgba(234,179,8,0.1); border-color: rgba(234,179,8,0.3);
+    }
+    .status-pending h3 { color: #eab308; }
+
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center; z-index: 100; padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+      width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; padding: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); position: relative;
+    }
+    .modal h2 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--blue-300); }
+    .modal p { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.95rem; }
+    .close-modal {
+      position: absolute; top: 1rem; right: 1rem; background: none; border: none;
+      color: var(--text-muted); font-size: 1.5rem; cursor: pointer; line-height: 1;
+    }
+    .form-group { margin-bottom: 1.1rem; }
+    label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-muted); margin-bottom: 0.35rem; }
+    input, textarea {
+      width: 100%; padding: 0.8rem 1rem; background: #0a0f1a; border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); font-size: 1rem; font-family: inherit;
+    }
+    input:focus, textarea:focus { outline: none; border-color: var(--blue-500); }
+    .error-msg { color: var(--danger); font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+    .pix-box {
+      background: #0a0f1a; border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.25rem; margin-bottom: 1.25rem; text-align: center;
+    }
+    #qrcode {
+      display: flex; justify-content: center; margin: 1rem auto; background: white;
+      padding: 12px; border-radius: 12px; width: fit-content;
+    }
+    .pix-key {
+      font-family: monospace; font-size: 0.8rem; word-break: break-all;
+      background: rgba(59,130,246,0.1); padding: 0.7rem; border-radius: 8px;
+      margin: 0.7rem 0; color: var(--blue-300); user-select: all;
+    }
+    .steps { text-align: left; margin: 1rem 0; padding-left: 1.2rem; color: var(--text-muted); font-size: 0.9rem; }
+    .steps li { margin-bottom: 0.35rem; }
+    .success-box { display: none; text-align: center; padding: 1rem 0; }
+    .success-box.active { display: block; }
+    .success-box h3 { color: var(--success); font-size: 1.3rem; margin-bottom: 0.6rem; }
+    .tab-btns { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .tab-btn {
+      flex: 1; padding: 0.6rem; background: transparent; border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: 8px; cursor: pointer; font-weight: 500;
+    }
+    .tab-btn.active { background: rgba(59,130,246,0.15); border-color: var(--blue-500); color: var(--blue-300); }
+    footer {
+      text-align: center; margin-top: 3.5rem; padding-top: 1.5rem;
+      border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem;
+    }
+    .support-btn {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-700), var(--blue-500));
+      color: white; border: none; font-size: 1.4rem; cursor: pointer;
+      box-shadow: 0 8px 25px rgba(59,130,246,0.45);
+    }
+
+    /* ===== E-book Reader Overlay ===== */
+    .ebook-overlay {
+      position: fixed; inset: 0; background: #070b14; z-index: 200;
+      display: none; flex-direction: column; overflow: hidden;
+    }
+    .ebook-overlay.active { display: flex; }
+    .ebook-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.85rem 1rem; border-bottom: 1px solid var(--border);
+      background: #0a101f; flex-shrink: 0;
+    }
+    .ebook-header h2 {
+      font-size: 0.95rem; font-weight: 700; color: var(--blue-300); margin: 0;
+    }
+    .ebook-body { display: flex; flex: 1; overflow: hidden; }
+    .ebook-nav {
+      width: 220px; background: #0a101f; border-right: 1px solid var(--border);
+      overflow-y: auto; padding: 0.75rem; flex-shrink: 0;
+    }
+    .ebook-nav button {
+      display: block; width: 100%; text-align: left; padding: 0.5rem 0.65rem;
+      margin-bottom: 0.2rem; background: transparent; border: none; border-radius: 8px;
+      color: var(--text-muted); font-size: 0.8rem; font-weight: 500; cursor: pointer;
+      font-family: inherit;
+    }
+    .ebook-nav button:hover { background: rgba(59,130,246,0.1); color: var(--blue-300); }
+    .ebook-nav button.active {
+      background: rgba(59,130,246,0.18); color: var(--blue-300);
+      border-left: 3px solid var(--blue-500);
+    }
+    .ebook-content {
+      flex: 1; overflow-y: auto; padding: 1.5rem 1.25rem 3rem;
+    }
+    .ebook-content h3 {
+      font-size: 1.35rem; font-weight: 800; margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff, var(--blue-300));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .ebook-content h4 {
+      font-size: 1.05rem; font-weight: 700; color: var(--blue-400); margin: 1.25rem 0 0.6rem;
+    }
+    .ebook-content p {
+      color: var(--text-muted); line-height: 1.7; margin-bottom: 0.9rem; font-size: 0.95rem;
+    }
+    .ebook-content ul {
+      margin: 0.5rem 0 1rem 1.1rem; color: var(--text-muted); font-size: 0.95rem;
+    }
+    .ebook-content li { margin-bottom: 0.35rem; line-height: 1.55; }
+    .ebook-highlight {
+      background: rgba(59,130,246,0.1); border-left: 3px solid var(--blue-500);
+      padding: 0.85rem 1rem; border-radius: 0 10px 10px 0; margin: 1rem 0;
+      color: var(--blue-300); font-style: italic; line-height: 1.6; font-size: 0.92rem;
+    }
+    .ebook-nav-btns {
+      display: flex; gap: 0.6rem; margin-top: 1.75rem; padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+    .ebook-chapter { display: none; }
+    .ebook-chapter.active { display: block; }
+    @media (max-width: 700px) {
+      .ebook-nav { display: none; }
+      .ebook-nav.mobile-open {
+        display: block; position: absolute; top: 52px; left: 0; bottom: 0;
+        width: 80%; max-width: 260px; z-index: 10;
+        box-shadow: 8px 0 30px rgba(0,0,0,0.5);
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <div class="logo">📘 E-book Store</div>
+      <div class="header-right" id="headerRight"></div>
+    </header>
 
-<header>MARKETING DIGITAL</header>
+    <section class="hero">
+      <div class="cover-wrap">
+        <div class="cover-placeholder" id="coverPlaceholder">Capa do E-book</div>
+        <img id="coverImg" src="" alt="Capa" style="display:none;" />
+      </div>
+      <div class="info">
+        <h1 id="ebookTitle">Carregando...</h1>
+        <div class="price-box">
+          <span class="label">Por apenas</span>
+          <span class="value" id="ebookPrice">R$ 0,00</span>
+        </div>
+        <p class="desc" id="ebookDesc">Carregando descrição...</p>
+        <button class="btn btn-primary" id="buyBtn" onclick="handleBuy()">🛒 Comprar agora via Pix</button>
 
-<div class="hero">
-  <div class="tag">SEU PRÓXIMO PASSO COMEÇA AQUI</div>
-  <h1>Aprenda Marketing Digital do Zero!</h1>
-  <p>
-    Descubra como funciona o universo do marketing digital,
-    conheça suas principais estratégias e aprenda a desenvolver
-    projetos e negócios na internet.
-  </p>
-  <a class="btn" href="#conteudo">CONHECER O E-BOOK</a>
-</div>
+        <div class="status-box" id="statusReleased">
+          <h3>✅ E-book liberado para você!</h3>
+          <p>Seu pagamento foi confirmado pelo vendedor.</p>
+          <button class="btn btn-success" id="downloadLink" onclick="openEbook()" style="margin-top:0.75rem;width:100%;">
+            📖 Abrir E-book Completo
+          </button>
+        </div>
+        <div class="status-box status-pending" id="statusPending">
+          <h3>⏳ Aguardando confirmação</h3>
+          <p>Seu pedido foi registrado. O vendedor vai liberar o e-book assim que confirmar o pagamento.</p>
+        </div>
+      </div>
+    </section>
 
-<section id="conteudo">
-  <h2>O que você vai aprender?</h2>
-
-  <div class="card">
-    <h3>01. Introdução ao Marketing Digital</h3>
-    <p>Entenda o mercado digital e suas oportunidades.</p>
+    <footer>Pagamento via Pix · Liberação manual pelo vendedor · Suporte disponível</footer>
   </div>
 
-  <div class="card">
-    <h3>02. Redes Sociais</h3>
-    <p>Aprenda sobre Instagram, TikTok, YouTube e outras plataformas.</p>
+  <button class="support-btn" onclick="openSupport()" title="Tirar dúvida">💬</button>
+
+  <!-- Modal Login / Cadastro -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal">
+      <button class="close-modal" onclick="closeModal('authModal')">×</button>
+      <div class="tab-btns">
+        <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Entrar</button>
+        <button class="tab-btn" id="tabRegister" onclick="switchTab('register')">Criar conta</button>
+      </div>
+      <div id="loginForm">
+        <h2>Entrar</h2>
+        <p>Acesse sua conta para comprar e baixar o e-book.</p>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="loginEmail" placeholder="seu@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Senha</label>
+          <input type="password" id="loginPass" placeholder="Sua senha" />
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="doLogin()">Entrar</button>
+        <p class="error-msg" id="loginError"></p>
+      </div>
+      <div id="registerForm" style="display:none;">
+        <h2>Criar conta</h2>
+        <p>Cadastre-se para poder comprar o e-book.</p>
+        <div class="form-group">
+          <label>Nome</label>
+          <input type="text" id="regName" placeholder="Seu nome" />
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="regEmail" placeholder="seu@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Senha</label>
+          <input type="password" id="regPass" placeholder="Mínimo 6 caracteres" />
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="doRegister()">Criar conta</button>
+        <p class="error-msg" id="regError"></p>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>03. Criação de Conteúdo</h3>
-    <p>Conheça técnicas para produzir conteúdos interessantes.</p>
+  <!-- Modal Pagamento -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal">
+      <button class="close-modal" onclick="closeModal('paymentModal')">×</button>
+      <div id="paymentStep">
+        <h2>Pagamento via Pix</h2>
+        <p>Escaneie o QR Code ou copie o código e pague no seu banco. Depois o vendedor libera o e-book.</p>
+        <div class="pix-box">
+          <div id="qrcode"></div>
+          <div class="pix-key" id="pixPayload">Gerando...</div>
+          <button class="btn btn-outline" style="width:100%;margin-top:0.5rem;" onclick="copyPix()">📋 Copiar código Pix</button>
+        </div>
+        <ol class="steps">
+          <li>Abra o app do seu banco</li>
+          <li>Escolha Pix → QR Code ou Copia e Cola</li>
+          <li>Pague o valor exato</li>
+          <li>Clique no botão abaixo para registrar o pedido</li>
+        </ol>
+        <button class="btn btn-success" style="width:100%" onclick="registerOrder()">
+          ✅ Já paguei — Registrar pedido
+        </button>
+      </div>
+      <div class="success-box" id="orderSuccess">
+        <h3>Pedido registrado!</h3>
+        <p>O vendedor recebeu seu pedido e vai liberar o e-book assim que confirmar o pagamento no extrato.</p>
+        <p style="margin-top:1rem;font-size:0.9rem;">Você pode fechar esta janela. Acompanhe o status na página principal.</p>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>04. Estratégias de Vendas</h3>
-    <p>Entenda funis de vendas, divulgação e relacionamento com clientes.</p>
+  <!-- Modal Suporte -->
+  <div class="modal-overlay" id="supportModal">
+    <div class="modal">
+      <button class="close-modal" onclick="closeModal('supportModal')">×</button>
+      <h2>💬 Suporte</h2>
+      <p>Envie sua dúvida. O vendedor verá no painel.</p>
+      <div class="form-group">
+        <label>Sua mensagem</label>
+        <textarea id="supportMsg" rows="4" placeholder="Escreva sua dúvida aqui..."></textarea>
+      </div>
+      <button class="btn btn-primary" style="width:100%" onclick="sendSupport()">Enviar mensagem</button>
+      <p class="error-msg" id="supportError"></p>
+      <div id="myMessages" style="margin-top:1.5rem;"></div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>05. Como começar seu projeto</h3>
-    <p>Organize suas ideias e desenvolva seu próprio projeto digital.</p>
+  <script>
+    const CFG_KEY = "ebookConfig";
+    const USERS_KEY = "ebookUsers";
+    const ORDERS_KEY = "ebookOrders";
+    const MSGS_KEY = "ebookMessages";
+    const SESSION_KEY = "ebookSession";
+
+    const DEFAULT_CONFIG = {
+      title: "Guia Completo de Marketing Digital 2026",
+      price: 27.90,
+      description: "Aprenda as estratégias mais atualizadas de tráfego pago, orgânico e conversão.\n\nMais de 120 páginas com cases reais, templates e checklist prontos para usar.",
+      image: "",
+      pixKey: "seuemail@dominio.com",
+      merchantName: "SEU NOME",
+      merchantCity: "SAO PAULO",
+      ebookUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    };
+
+    function getConfig() {
+      try {
+        const s = localStorage.getItem(CFG_KEY);
+        return s ? { ...DEFAULT_CONFIG, ...JSON.parse(s) } : { ...DEFAULT_CONFIG };
+      } catch { return { ...DEFAULT_CONFIG }; }
+    }
+    function getUsers() {
+      try { return JSON.parse(localStorage.getItem(USERS_KEY) || "[]"); } catch { return []; }
+    }
+    function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+    function getOrders() {
+      try { return JSON.parse(localStorage.getItem(ORDERS_KEY) || "[]"); } catch { return []; }
+    }
+    function saveOrders(o) { localStorage.setItem(ORDERS_KEY, JSON.stringify(o)); }
+    function getMessages() {
+      try { return JSON.parse(localStorage.getItem(MSGS_KEY) || "[]"); } catch { return []; }
+    }
+    function saveMessages(m) { localStorage.setItem(MSGS_KEY, JSON.stringify(m)); }
+    function getSession() {
+      try { return JSON.parse(localStorage.getItem(SESSION_KEY) || "null"); } catch { return null; }
+    }
+    function setSession(user) {
+      if (user) localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+      else localStorage.removeItem(SESSION_KEY);
+    }
+
+    function render() {
+      const cfg = getConfig();
+      document.getElementById("ebookTitle").textContent = cfg.title;
+      document.getElementById("ebookPrice").textContent = "R$ " + Number(cfg.price).toFixed(2).replace(".", ",");
+      document.getElementById("ebookDesc").textContent = cfg.description;
+      // botão de abrir e-book já usa onclick="openEbook()"
+
+      const img = document.getElementById("coverImg");
+      const ph = document.getElementById("coverPlaceholder");
+      if (cfg.image && cfg.image.trim()) {
+        img.src = cfg.image; img.style.display = "block"; ph.style.display = "none";
+      } else {
+        img.style.display = "none"; ph.style.display = "flex";
+        ph.textContent = cfg.title.substring(0, 40);
+      }
+      renderHeader();
+      checkUserOrderStatus();
+    }
+
+    function renderHeader() {
+      const session = getSession();
+      const el = document.getElementById("headerRight");
+      if (session) {
+        el.innerHTML = `
+          <span class="user-badge">👤 ${session.name || session.email}</span>
+          <button class="btn btn-outline" onclick="logout()">Sair</button>
+          <a href="admin.html" class="btn btn-outline" style="font-size:0.8rem;">Área do Proprietário</a>
+        `;
+      } else {
+        el.innerHTML = `
+          <button class="btn btn-outline" onclick="openAuth()">Entrar / Cadastrar</button>
+          <a href="admin.html" class="btn btn-outline" style="font-size:0.8rem;">Área do Proprietário</a>
+        `;
+      }
+    }
+
+    function checkUserOrderStatus() {
+      const session = getSession();
+      const released = document.getElementById("statusReleased");
+      const pending = document.getElementById("statusPending");
+      released.classList.remove("active");
+      pending.classList.remove("active");
+      if (!session) return;
+      const orders = getOrders().filter(o => o.email === session.email);
+      if (orders.some(o => o.status === "released")) released.classList.add("active");
+      else if (orders.some(o => o.status === "pending")) pending.classList.add("active");
+    }
+
+    function openAuth() {
+      document.getElementById("authModal").classList.add("active");
+      switchTab("login");
+    }
+    function switchTab(tab) {
+      document.getElementById("tabLogin").classList.toggle("active", tab === "login");
+      document.getElementById("tabRegister").classList.toggle("active", tab === "register");
+      document.getElementById("loginForm").style.display = tab === "login" ? "block" : "none";
+      document.getElementById("registerForm").style.display = tab === "register" ? "block" : "none";
+      document.getElementById("loginError").style.display = "none";
+      document.getElementById("regError").style.display = "none";
+    }
+    function doRegister() {
+      const name = document.getElementById("regName").value.trim();
+      const email = document.getElementById("regEmail").value.trim().toLowerCase();
+      const pass = document.getElementById("regPass").value;
+      const err = document.getElementById("regError");
+      if (!name || !email || pass.length < 6) {
+        err.textContent = "Preencha todos os campos (senha mín. 6 caracteres).";
+        err.style.display = "block"; return;
+      }
+      const users = getUsers();
+      if (users.find(u => u.email === email)) {
+        err.textContent = "Este e-mail já está cadastrado.";
+        err.style.display = "block"; return;
+      }
+      users.push({ name, email, password: pass, createdAt: new Date().toISOString() });
+      saveUsers(users);
+      setSession({ name, email });
+      closeModal("authModal");
+      render();
+      alert("Conta criada com sucesso!");
+    }
+    function doLogin() {
+      const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+      const pass = document.getElementById("loginPass").value;
+      const err = document.getElementById("loginError");
+      const user = getUsers().find(u => u.email === email && u.password === pass);
+      if (!user) {
+        err.textContent = "E-mail ou senha incorretos.";
+        err.style.display = "block"; return;
+      }
+      setSession({ name: user.name, email: user.email });
+      closeModal("authModal");
+      render();
+    }
+    function logout() {
+      setSession(null);
+      render();
+    }
+
+    function handleBuy() {
+      if (!getSession()) {
+        openAuth();
+        alert("Faça login ou crie uma conta para comprar.");
+        return;
+      }
+      openPayment();
+    }
+
+    function crc16(str) {
+      let crc = 0xFFFF;
+      for (let i = 0; i < str.length; i++) {
+        crc ^= str.charCodeAt(i) << 8;
+        for (let j = 0; j < 8; j++) {
+          if (crc & 0x8000) crc = (crc << 1) ^ 0x1021;
+          else crc <<= 1;
+          crc &= 0xFFFF;
+        }
+      }
+      return crc.toString(16).toUpperCase().padStart(4, "0");
+    }
+    function field(id, value) {
+      return id + value.length.toString().padStart(2, "0") + value;
+    }
+    function generatePixPayload(cfg) {
+      const key = (cfg.pixKey || "").trim();
+      const name = (cfg.merchantName || "RECEBEDOR").substring(0, 25).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const city = (cfg.merchantCity || "SAO PAULO").substring(0, 15).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const amount = Number(cfg.price).toFixed(2);
+      const merchantAccount = field("00", "br.gov.bcb.pix") + field("01", key);
+      let payload = field("00", "01") + field("26", merchantAccount) + field("52", "0000") +
+        field("53", "986") + field("54", amount) + field("58", "BR") +
+        field("59", name) + field("60", city) + field("62", field("05", "***")) + "6304";
+      return payload + crc16(payload);
+    }
+
+    function openPayment() {
+      const cfg = getConfig();
+      const key = (cfg.pixKey || "").trim();
+
+      if (!key) {
+        alert("Chave Pix não configurada. Vá no painel do proprietário (admin.html), coloque sua chave Pix e clique em Salvar.");
+        return;
+      }
+
+      // Aviso se ainda estiver com valor de exemplo
+      if (key.includes("seuemail") || key === "exemplo" || key.length < 5) {
+        alert("Atenção: a chave Pix ainda parece ser de exemplo.\n\nVá no painel (admin.html) → aba E-book & Pix → coloque sua chave real e clique em SALVAR.");
+        return;
+      }
+
+      try {
+        const payload = generatePixPayload(cfg);
+        document.getElementById("pixPayload").textContent = payload;
+
+        const qr = document.getElementById("qrcode");
+        qr.innerHTML = "";
+
+        if (typeof QRCode === "undefined") {
+          qr.innerHTML = "<p style='color:#f87171'>Erro: biblioteca QR Code não carregou. Verifique sua internet.</p>";
+        } else {
+          QRCode.toCanvas(payload, { width: 210, margin: 1 }, (err, canvas) => {
+            if (err) {
+              console.error(err);
+              qr.innerHTML = "<p style='color:#f87171'>Erro ao gerar QR Code</p>";
+            } else {
+              qr.appendChild(canvas);
+            }
+          });
+        }
+
+        document.getElementById("paymentStep").style.display = "block";
+        document.getElementById("orderSuccess").classList.remove("active");
+        document.getElementById("paymentModal").classList.add("active");
+      } catch (e) {
+        console.error(e);
+        alert("Erro ao gerar pagamento: " + e.message);
+      }
+    }
+
+    function copyPix() {
+      const text = document.getElementById("pixPayload").textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target;
+        const orig = btn.textContent;
+        btn.textContent = "✅ Copiado!";
+        setTimeout(() => btn.textContent = orig, 2000);
+      });
+    }
+
+    function registerOrder() {
+      const session = getSession();
+      if (!session) return;
+      const cfg = getConfig();
+      const orders = getOrders();
+      if (orders.find(o => o.email === session.email && o.status === "pending")) {
+        alert("Você já tem um pedido pendente.");
+        closeModal("paymentModal");
+        return;
+      }
+      orders.push({
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        email: session.email,
+        name: session.name,
+        amount: cfg.price,
+        status: "pending",
+        createdAt: new Date().toISOString()
+      });
+      saveOrders(orders);
+      document.getElementById("paymentStep").style.display = "none";
+      document.getElementById("orderSuccess").classList.add("active");
+      checkUserOrderStatus();
+    }
+
+    function openSupport() {
+      if (!getSession()) {
+        openAuth();
+        alert("Faça login para enviar mensagens.");
+        return;
+      }
+      renderMyMessages();
+      document.getElementById("supportModal").classList.add("active");
+    }
+    function sendSupport() {
+      const session = getSession();
+      const text = document.getElementById("supportMsg").value.trim();
+      const err = document.getElementById("supportError");
+      if (!text) {
+        err.textContent = "Escreva uma mensagem.";
+        err.style.display = "block"; return;
+      }
+      const msgs = getMessages();
+      msgs.push({
+        id: Date.now().toString(36),
+        email: session.email,
+        name: session.name,
+        text,
+        from: "client",
+        createdAt: new Date().toISOString(),
+        read: false
+      });
+      saveMessages(msgs);
+      document.getElementById("supportMsg").value = "";
+      err.style.display = "none";
+      renderMyMessages();
+      alert("Mensagem enviada!");
+    }
+    function renderMyMessages() {
+      const session = getSession();
+      if (!session) return;
+      const msgs = getMessages().filter(m => m.email === session.email);
+      const box = document.getElementById("myMessages");
+      if (!msgs.length) {
+        box.innerHTML = "<p style='color:var(--text-muted);font-size:0.9rem;'>Nenhuma mensagem ainda.</p>";
+        return;
+      }
+      box.innerHTML = "<h3 style='font-size:1rem;margin-bottom:0.75rem;color:var(--blue-300);'>Suas mensagens</h3>" +
+        msgs.map(m => `
+          <div style="background:#0a0f1a;border:1px solid var(--border);border-radius:10px;padding:0.8rem;margin-bottom:0.6rem;">
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.3rem;">
+              ${m.from === "client" ? "Você" : "Vendedor"} · ${new Date(m.createdAt).toLocaleString("pt-BR")}
+            </div>
+            <div>${m.text}</div>
+          </div>
+        `).join("");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("active");
+    }
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") ["authModal","paymentModal","supportModal"].forEach(closeModal);
+    });
+
+    // Sempre relê a configuração quando a página volta a ficar visível
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") render();
+    });
+    window.addEventListener("focus", () => render());
+    setInterval(() => { render(); }, 3000);
+
+    // ========== E-book Reader ==========
+    const EBOOK_CHAPTERS = [
+      { title: "Capa", html: `
+        <div style="text-align:center;padding:2rem 0.5rem;">
+          <h3 style="font-size:1.6rem;">Marketing Digital Completo 2026</h3>
+          <p style="color:var(--blue-300);font-size:1.05rem;margin:1rem 0;">O guia prático para atrair clientes, vender mais e construir uma presença digital forte</p>
+          <p>Conteúdo atualizado para o mercado brasileiro. Aplique ainda hoje, mesmo começando do zero.</p>
+          <button class="btn btn-primary" style="margin-top:1.5rem;" onclick="ebookGo(1)">Começar a ler →</button>
+        </div>` },
+      { title: "1. Introdução", html: `
+        <h3>1. Introdução ao Marketing Digital</h3>
+        <p>Marketing Digital é o conjunto de estratégias realizadas na internet para atrair, engajar, converter e fidelizar clientes. Diferente do marketing tradicional, o digital permite segmentação precisa, mensuração em tempo real e investimento acessível.</p>
+        <p>Em 2026, mais de 90% dos brasileiros conectados pesquisam produtos e serviços online antes de comprar.</p>
+        <h4>Por que investir?</h4>
+        <ul>
+          <li>Alcance global ou hiperlocal com custo controlado</li>
+          <li>Resultados mensuráveis</li>
+          <li>Testes rápidos e otimização contínua</li>
+          <li>Relacionamento duradouro com o cliente</li>
+          <li>Escalabilidade</li>
+        </ul>
+        <div class="ebook-highlight">Este e-book é prático. Ao final de cada capítulo você terá ações claras para aplicar imediatamente.</div>` },
+      { title: "2. Público", html: `
+        <h3>2. Definindo Público e Posicionamento</h3>
+        <p>Antes de criar conteúdo ou anúncio, saiba para quem está falando. O erro mais comum é tentar vender para “todo mundo”.</p>
+        <h4>Crie sua Persona</h4>
+        <ul>
+          <li>Idade, gênero, localização e renda aproximada</li>
+          <li>Maiores dores e desejos relacionados ao seu produto</li>
+          <li>Onde busca informação (Instagram, Google, YouTube…)</li>
+          <li>Objeções na hora de comprar</li>
+          <li>Linguagem e tom de voz do dia a dia</li>
+        </ul>
+        <h4>Posicionamento</h4>
+        <p>Exemplo: “Ajudamos pequenos negócios a vender todo dia no Instagram com conteúdo simples e anúncios de baixo custo”.</p>
+        <div class="ebook-highlight">Exercício: escreva em uma frase quem você ajuda, o resultado que entrega e de que forma.</div>` },
+      { title: "3. SEO", html: `
+        <h3>3. SEO – Apareça no Google</h3>
+        <p>SEO é o conjunto de técnicas para aparecer nas primeiras posições do Google de forma orgânica (sem pagar por clique).</p>
+        <h4>Pilares do SEO em 2026</h4>
+        <p><b>1. Conteúdo e intenção de busca</b> — responda o que a pessoa realmente procura.</p>
+        <p><b>2. SEO On-page</b></p>
+        <ul>
+          <li>Título com a palavra-chave (até 60 caracteres)</li>
+          <li>Meta description atrativa</li>
+          <li>URL amigável</li>
+          <li>Headings (H1, H2, H3) organizados</li>
+          <li>Imagens com alt e otimizadas</li>
+        </ul>
+        <p><b>3. Experiência e velocidade</b> — site rápido e mobile-friendly.</p>
+        <p><b>4. Autoridade</b> — backlinks e menções de outros sites.</p>
+        <div class="ebook-highlight">Escolha 5–10 palavras-chave de baixa concorrência e escreva artigos completos (1.500+ palavras). Em 3–6 meses o tráfego começa a aparecer.</div>` },
+      { title: "4. Conteúdo", html: `
+        <h3>4. Marketing de Conteúdo</h3>
+        <p>Atrair e nutrir pessoas com informação útil, sem vender o tempo todo. Gera confiança e demanda espontânea.</p>
+        <h4>Formatos que funcionam</h4>
+        <ul>
+          <li>Artigos de blog (SEO + autoridade)</li>
+          <li>Vídeos curtos (Reels, TikTok, Shorts)</li>
+          <li>Carrosséis no Instagram e LinkedIn</li>
+          <li>Lives e webinars</li>
+          <li>E-books, checklists e templates</li>
+          <li>Podcasts e newsletters</li>
+        </ul>
+        <h4>Calendário simples</h4>
+        <ul>
+          <li>2–3 posts de valor por semana</li>
+          <li>1 conteúdo longo por semana ou quinzena</li>
+          <li>1 e-mail para a lista por semana</li>
+        </ul>
+        <div class="ebook-highlight">Regra 80/20: 80% conteúdo útil e 20% venda direta.</div>` },
+      { title: "5. Redes Sociais", html: `
+        <h3>5. Redes Sociais Estratégicas</h3>
+        <p>Escolha 1 ou 2 redes onde seu público está e seja excelente nelas.</p>
+        <ul>
+          <li><b>Instagram / TikTok</b> → visual, produtos, serviços locais, infoprodutos</li>
+          <li><b>YouTube</b> → autoridade, tutoriais, SEO de longo prazo</li>
+          <li><b>LinkedIn</b> → B2B e networking</li>
+          <li><b>Facebook</b> → públicos 35+ e grupos de nicho</li>
+        </ul>
+        <h4>Boas práticas</h4>
+        <ul>
+          <li>Bio clara + CTA (link na bio)</li>
+          <li>Identidade visual consistente</li>
+          <li>Stories diários para proximidade</li>
+          <li>Responda comentários e DMs rápido</li>
+          <li>CTAs claros (“Salve”, “Comente X”, “Link na bio”)</li>
+        </ul>
+        <div class="ebook-highlight">O algoritmo recompensa retenção e interação. Faça conteúdos que as pessoas assistem até o final e comentam.</div>` },
+      { title: "6. Tráfego Pago", html: `
+        <h3>6. Tráfego Pago (Google Ads e Meta Ads)</h3>
+        <p>Anúncios colocam sua oferta na frente de pessoas certas imediatamente.</p>
+        <h4>Google Ads</h4>
+        <p>Ideal para quem já tem intenção de compra. Comece com Pesquisa e palavras de cauda longa. Configure a tag de conversão no primeiro dia.</p>
+        <h4>Meta Ads</h4>
+        <p>Ótimo para criar demanda e remarketing. Segmente por interesses, comportamentos e lookalike. Teste vários criativos.</p>
+        <h4>Regras de ouro</h4>
+        <ul>
+          <li>Objetivo claro (conversão, tráfego, mensagens)</li>
+          <li>Pixel/tag instalado antes de gastar</li>
+          <li>Orçamento baixo no início, escale o que funciona</li>
+          <li>Separe prospecção e remarketing</li>
+          <li>Acompanhe CPA e ROAS</li>
+        </ul>
+        <div class="ebook-highlight">Comece com R$ 15–30/dia. Quando achar o que funciona, aumente 20–30% por vez.</div>` },
+      { title: "7. E-mail", html: `
+        <h3>7. E-mail Marketing que Converte</h3>
+        <p>Um dos canais com melhor ROI. Contato direto, sem algoritmo no meio.</p>
+        <h4>Como construir a lista</h4>
+        <p>Ofereça um lead magnet (e-book, checklist, template, aula) em troca do e-mail. Use site, link na bio e anúncios de captura.</p>
+        <h4>Sequência básica</h4>
+        <ul>
+          <li>1. Boas-vindas + entrega do material</li>
+          <li>2. História / autoridade</li>
+          <li>3. Conteúdo de valor + quebra de objeções</li>
+          <li>4. Oferta clara com prazo ou bônus</li>
+          <li>5. Follow-up e prova social</li>
+        </ul>
+        <div class="ebook-highlight">O assunto do e-mail define grande parte da abertura. Teste curiosidade, números e benefício direto.</div>` },
+      { title: "8. Funil", html: `
+        <h3>8. Funil de Vendas e Jornada do Cliente</h3>
+        <p><b>Topo (Atração)</b> — a pessoa descobre o problema. Conteúdo educativo, SEO, redes, anúncios de reconhecimento.</p>
+        <p><b>Meio (Consideração)</b> — busca soluções. Comparativos, cases, webinars, e-mail nurturing.</p>
+        <p><b>Fundo (Conversão)</b> — pronta para comprar. Página de vendas, depoimentos, garantias, urgência.</p>
+        <p><b>Pós-venda</b> — entrega excelente, upsell, indicação e recompra.</p>
+        <div class="ebook-highlight">Mapeie a jornada real do seu cliente e crie conteúdos e ofertas específicos para cada etapa.</div>` },
+      { title: "9. Métricas", html: `
+        <h3>9. Métricas, Analytics e Otimização</h3>
+        <p>O que não é medido não pode ser melhorado.</p>
+        <ul>
+          <li>Tráfego e origem (Google Analytics 4)</li>
+          <li>Taxa de conversão de páginas e formulários</li>
+          <li>Custo por lead (CPL) e por aquisição (CPA)</li>
+          <li>ROAS (retorno sobre anúncios)</li>
+          <li>Abertura e clique de e-mails</li>
+          <li>Engajamento nas redes</li>
+          <li>LTV (valor do cliente ao longo do tempo)</li>
+        </ul>
+        <div class="ebook-highlight">Configure Google Analytics 4 e o Pixel da Meta desde o primeiro dia.</div>` },
+      { title: "10. Plano 30 dias", html: `
+        <h3>10. Checklist e Plano de 30 Dias</h3>
+        <h4>Checklist mínima</h4>
+        <ul>
+          <li>☐ Persona e posicionamento definidos</li>
+          <li>☐ Site ou página de captura no ar</li>
+          <li>☐ Google Meu Negócio (se for local)</li>
+          <li>☐ Perfis otimizados (bio + link)</li>
+          <li>☐ Analytics e Pixel instalados</li>
+          <li>☐ 1 lead magnet criado</li>
+          <li>☐ Sequência de e-mail de boas-vindas</li>
+          <li>☐ 5 conteúdos de valor publicados</li>
+          <li>☐ Primeira campanha de tráfego testada</li>
+        </ul>
+        <h4>Plano de 30 dias</h4>
+        <p><b>Semana 1</b> — Fundação: persona, site, Analytics, Pixel.</p>
+        <p><b>Semana 2</b> — Conteúdo: 4–6 posts + 1 material rico + e-mail.</p>
+        <p><b>Semana 3</b> — Distribuição: publicar, engajar, lista e primeiros anúncios.</p>
+        <p><b>Semana 4</b> — Otimização: analisar números e preparar oferta de conversão.</p>` },
+      { title: "Conclusão", html: `
+        <h3>Conclusão e Próximos Passos</h3>
+        <p>Marketing Digital é um sistema: atrair a pessoa certa, nutrir com valor, converter com oferta clara e continuar o relacionamento.</p>
+        <p>O maior erro é tentar fazer tudo ao mesmo tempo. Escolha um canal principal, domine-o e depois expanda.</p>
+        <p>Comece hoje. Defina sua persona, publique o primeiro conteúdo e configure a medição.</p>
+        <div class="ebook-highlight">Este e-book é um mapa. O território se revela quando você coloca a mão na massa. Boa jornada e boas vendas!</div>
+        <p style="text-align:center;margin-top:2rem;color:var(--blue-300);font-weight:600;">— Fim do E-book —</p>` }
+    ];
+
+    let ebookCurrent = 0;
+
+    function openEbook() {
+      document.getElementById("ebookOverlay").classList.add("active");
+      ebookGo(0);
+      document.body.style.overflow = "hidden";
+    }
+    function closeEbook() {
+      document.getElementById("ebookOverlay").classList.remove("active");
+      document.body.style.overflow = "";
+    }
+    function ebookGo(n) {
+      if (n < 0 || n >= EBOOK_CHAPTERS.length) return;
+      ebookCurrent = n;
+      const content = document.getElementById("ebookContent");
+      content.innerHTML = EBOOK_CHAPTERS[n].html + `
+        <div class="ebook-nav-btns">
+          <button class="btn btn-outline" onclick="ebookGo(${n-1})" style="${n===0?'visibility:hidden':''}">← Anterior</button>
+          <button class="btn btn-primary" onclick="ebookGo(${n+1})" style="${n===EBOOK_CHAPTERS.length-1?'visibility:hidden':''}">Próximo →</button>
+        </div>`;
+      content.scrollTop = 0;
+      document.querySelectorAll(".ebook-nav button").forEach((btn, i) => {
+        btn.classList.toggle("active", i === n);
+      });
+      // fecha menu mobile
+      document.getElementById("ebookNav").classList.remove("mobile-open");
+    }
+    function toggleEbookNav() {
+      document.getElementById("ebookNav").classList.toggle("mobile-open");
+    }
+
+    render();
+  </script>
+
+  <!-- E-book Overlay (tudo embutido, sem arquivo separado) -->
+  <div class="ebook-overlay" id="ebookOverlay">
+    <div class="ebook-header">
+      <button class="btn btn-outline" onclick="toggleEbookNav()" style="padding:0.4rem 0.7rem;font-size:0.8rem;">☰ Capítulos</button>
+      <h2>📘 Marketing Digital 2026</h2>
+      <button class="btn btn-outline" onclick="closeEbook()" style="padding:0.4rem 0.7rem;font-size:0.8rem;">✕ Fechar</button>
+    </div>
+    <div class="ebook-body">
+      <nav class="ebook-nav" id="ebookNav">
+        <button class="active" onclick="ebookGo(0)">Capa</button>
+        <button onclick="ebookGo(1)">1. Introdução</button>
+        <button onclick="ebookGo(2)">2. Público</button>
+        <button onclick="ebookGo(3)">3. SEO</button>
+        <button onclick="ebookGo(4)">4. Conteúdo</button>
+        <button onclick="ebookGo(5)">5. Redes Sociais</button>
+        <button onclick="ebookGo(6)">6. Tráfego Pago</button>
+        <button onclick="ebookGo(7)">7. E-mail</button>
+        <button onclick="ebookGo(8)">8. Funil</button>
+        <button onclick="ebookGo(9)">9. Métricas</button>
+        <button onclick="ebookGo(10)">10. Plano 30 dias</button>
+        <button onclick="ebookGo(11)">Conclusão</button>
+      </nav>
+      <div class="ebook-content" id="ebookContent"></div>
+    </div>
   </div>
-</section>
-
-<section>
-  <div class="card" style="text-align:center">
-    <h2>Comece sua jornada!</h2>
-    <p>Tenha acesso ao nosso material completo sobre Marketing Digital.</p>
-    <a class="btn" href="SEU_LINK_DO_EBOOK">ACESSAR E-BOOK</a>
-    <p><small>Substitua o link do botão pelo endereço real do seu e-book.</small></p>
-  </div>
-</section>
-
-<footer>
-  © 2026 Marketing Digital - Todos os direitos reservados.
-</footer>
-
 </body>
 </html>
-  
